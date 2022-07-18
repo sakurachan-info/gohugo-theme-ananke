@@ -7,6 +7,7 @@
   {{ $section := .Site.GetPage "section" .Section }}
   <article class="flex-l flex-wrap justify-between mw8 center ph3">
     <header class="mt4 w-100">
+      <!--
       <aside class="instapaper_ignoref b helvetica tracked">
           {{/*
           CurrentSection allows us to use the section title instead of inferring from the folder.
@@ -14,8 +15,9 @@
           */}}
         {{with .CurrentSection.Title }}{{. | upper }}{{end}}
       </aside>
-      {{ partial "social-share.html" . }}
-      <h1 class="f1 athelas mt3 mb1">
+      -->
+      <!-- {{ partial "social-share.html" . }} -->
+      <h1 class="custom--title f4 athelas mt3 mb1">
         {{- .Title -}}
       </h1>
       {{ with .Params.author | default .Site.Params.author }}
@@ -31,7 +33,7 @@
       {{ end }}
       {{/* Hugo uses Go's date formatting is set by example. Here are two formats */}}
       {{ if not .Date.IsZero }}
-      <time class="f6 mv4 dib tracked" {{ printf `datetime="%s"` (.Date.Format "2006-01-02T15:04:05Z07:00") | safeHTMLAttr }}>
+      <time style="display: none;" class="f6 mv4 dib tracked" {{ printf `datetime="%s"` (.Date.Format "2006-01-02T15:04:05Z07:00") | safeHTMLAttr }}>
         {{- .Date | time.Format (default "January 2, 2006" .Site.Params.date_format) -}}
       </time>
       {{end}}
@@ -49,6 +51,24 @@
     </header>
     <div class="nested-copy-line-height lh-copy {{ $.Param "post_content_classes"  | default "serif"}} f4 nested-links {{ $.Param "text_color" | default "mid-gray" }} {{ cond (eq $.Site.Language.LanguageDirection "rtl") "pl4-l" "pr4-l" }} w-two-thirds-l">
       {{- .Content -}}
+      <div class="custom--postCommon">
+        <div class="custom--postCommon_wrapper">
+          <a class="custom--postCommon_button-share" href="https://twitter.com/share?url={{ .Permalink }}&hashtags=さくらちゃんぼっくす&text={{ "さくらちゃんの回答を見てみよう！\n\n" }}{{ .Summary | plainify }}{{ "...\n" }}" target="_blank">
+            回答をTwitterでシェア
+          </a>
+        </div>
+        <div class="custom--postCommon_wrapper">
+          <a class="custom--postCommon_button-moreAnswers" href="{{ .CurrentSection.RelPermalink }}">
+            他の回答をみる
+          </a>
+        </div>
+        <div class="custom--postCommon_wrapper">
+          <a class="custom--postCommon_button-ask" href="https://t.co/jySSINdrGO" target="_blank">
+            さくらちゃんに質問する
+          </a>
+        </div>
+      </div>
+
       {{- partial "tags.html" . -}}
       <div class="mt6 instapaper_ignoref">
       {{ if .Site.DisqusShortname }}

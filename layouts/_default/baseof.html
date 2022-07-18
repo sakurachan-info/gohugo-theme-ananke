@@ -19,7 +19,7 @@
 
     {{ partial "site-style.html" . }}
     {{ partial "site-scripts.html" . }}
-    
+
     {{ block "favicon" . }}
       {{ partialCached "site-favicon.html" . }}
     {{ end }}
@@ -40,6 +40,31 @@
       {{ template "_internal/google_analytics_async.html" . }}
     {{ end }}
 	{{ block "head" . }}{{ partial "head-additions.html" . }}{{ end }}
+
+  {{ if .Params.meta_image }}
+    {{ with .Params.meta_image }}
+      <meta property="og:image" content="{{ . | absURL }}">
+      <meta property="og:image:url" content="{{ . | absURL }}">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:app:name:iphone" content="{{ $.Site.Title }}">
+      <meta property="twitter:title" content="{{ $.Param "title" }}">
+      <meta property="twitter:description" content="{{ $.Param "description" }}">
+    {{ end }}
+  {{ else }}
+    {{ with .File }}
+      {{- $tcardRelativeImagePath := path.Join "img" (print .BaseFileName ".png") -}}
+      {{ if os.FileExists (path.Join "static" $tcardRelativeImagePath) }}
+        {{ with $tcardRelativeImagePath }}
+          <meta property="og:image" content="{{ . | absURL }}">
+          <meta property="og:image:url" content="{{ . | absURL }}">
+          <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:app:name:iphone" content="{{ $.Site.Title }}">
+          <meta property="twitter:title" content="{{ $.Param "title" }}">
+          <meta property="twitter:description" content="{{ $.Param "description" }}">
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
   </head>
 
   <body class="ma0 {{ $.Param "body_classes"  | default "avenir bg-near-white"}}{{ with getenv "HUGO_ENV" }} {{ . }}{{ end }}">

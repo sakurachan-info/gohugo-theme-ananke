@@ -52,7 +52,7 @@
     {{ end }}
   {{ else }}
     {{ with .File }}
-      {{- $tcardRelativeImagePath := path.Join "img" (print .BaseFileName ".png") -}}
+      {{- $tcardRelativeImagePath := path.Join "img" (print (path.Base $.RelPermalink) ".png") -}}
       {{ if os.FileExists (path.Join "static" $tcardRelativeImagePath) }}
         {{ with $tcardRelativeImagePath }}
           <meta property="og:image" content="{{ . | absURL }}">

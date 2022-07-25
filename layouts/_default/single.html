@@ -53,7 +53,7 @@
       {{- .Content -}}
       <div class="custom--postCommon">
         <div class="custom--postCommon_wrapper">
-          <a class="custom--postCommon_button-share" href="https://twitter.com/share?url={{ .Permalink }}&hashtags=さくらちゃんぼっくす&text={{ "さくらちゃんの回答を見てみよう！\n\n" }}{{ .Summary | plainify }}{{ "...\n" }}" target="_blank">
+          <a class="custom--postCommon_button-share" href="https://twitter.com/share?url={{ .Permalink }}&hashtags=さくらちゃんぼっくす&text={{ "さくらちゃんの回答を見てみよう！ @arowM_\n\n" }}{{ replace (plainify .Summary) "\n" "..." }}" target="_blank">
             回答をTwitterでシェア
           </a>
         </div>
